@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { exec } = require('child_process');
 
 const cwd = process.cwd();
 const { stdin, stdout } = process;
@@ -84,6 +85,12 @@ async function main()
 
 	console.log(`Configured projectID: ${projID} with name ${projName}!`);
 
+	// Update submodules
+	console.log("Updating submodules...");
+
+	await exec("git submodule init");
+	await exec("git submodule update --recursive");
+	
 	process.exit();
 }
 
