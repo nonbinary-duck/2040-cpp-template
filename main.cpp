@@ -1,6 +1,7 @@
-#include <iostream>
+#include <stdio.h>
 
-using std::cout, std::cin, std::endl;
+#include <pico/stdlib.h>
+#include <pico/cyw43_arch.h>
 
 #include "src/utils.hpp"
 
@@ -14,7 +15,17 @@ using std::cout, std::cin, std::endl;
  */
 int main(int argc, char *argv[])
 {
-	cout << "Hello, world!! I'm <PROJECT_NAME> :)" << endl;
-	
-	return 0;
+    stdio_init_all();
+
+    while (true)
+    {    
+        printf("LED on\n");
+        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
+        sleep_ms(1000);
+        printf("LED off\n");
+        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+        sleep_ms(1000);
+    }
+
+    return 0;
 }

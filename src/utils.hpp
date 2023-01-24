@@ -5,12 +5,6 @@
 #include <string>
 #include <chrono>
 #include <cstdint> // For explicit int types
-#include <iostream>
-
-#ifndef _MSVC_LANG
-    #include <float.h> // MSVC doesn't like this
-#endif
-
 
 namespace utils
 {
@@ -26,18 +20,6 @@ namespace utils
     typedef int_least32_t     tsint;
     typedef int_least16_t     tsshort;
     typedef int_least8_t      tschar;
-
-    // Give names to forced-width floating point types
-    // Let the compiler decide what type to use here, since msvc doesn't support 128-bit floating-point
-    //     Line is only included for consistency
-    typedef long double       tlongdouble;
-#ifdef _MSVC_LANG
-    typedef double            tdouble;
-    typedef float             tfloat;
-#else
-    typedef _Float64          tdouble;
-    typedef _Float32          tfloat;
-#endif
 
     // Static function utils
 
@@ -71,14 +53,11 @@ namespace utils
         s.pop_back();
         
         // Append the timezone
-#ifdef _MSVC_LANG
-        // It should be UTC, I don't see a workaround for Windows
+        // It should be UTC, I don't see a workaround for Windows (or pico)
         return s + " UTC";
-#else
-        return s + " " + time.tm_zone;
-#endif
     }
     
 } // End namespace utils
+
 
 #endif // H___PROJID___SRC_UTILS
