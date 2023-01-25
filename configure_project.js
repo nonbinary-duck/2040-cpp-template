@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { exec } = require('child_process');
+const { execSync } = require('child_process');
 
 const cwd = process.cwd();
 const { stdin, stdout } = process;
@@ -88,8 +88,7 @@ async function main()
 	// Update submodules
 	console.log("Updating submodules...");
 
-	await exec("git submodule init");
-	await exec("git submodule update --recursive");
+	execSync("git submodule update --init --recursive");
 	
 	process.exit();
 }
